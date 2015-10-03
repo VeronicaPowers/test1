@@ -1,0 +1,13 @@
+{
+  "name": "test1",
+  "version": "0.0.1",
+  "dependencies": {
+    "bluebird": "^2.10.0",
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "request": "^2.64.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
