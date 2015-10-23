@@ -11,17 +11,9 @@ class GroceryList extends React.Component {
     render() {
         return (
             <div>
-                <input type="text" value={this.state.inputText} onChange={(event) => this.handleTextChange(event)} />
+                <input type="text" value={this.state.inputText} placeholder={this.props.placeholder} onChange={(event) => this.handleTextChange(event)} />
                 <button onClick={this.handleAddButtonClick.bind(this)} disabled={this.state.inputText === ''}>Add</button>
-                <ul>
-                    {this.state.foods.map((food, i) => {
-                        return (
-                            <li key={i} style={{textDecoration: food.isChecked ? "line-through" : "none"}}>
-                                <input type="checkbox" onChange={(event) => this.handleCheckChange(event, i)} />{ food.name }
-                            </li>
-                        );
-                    })}
-                </ul>
+                <GroceryListFoods foods={this.state.foods} handleCheckChange={this.handleCheckChange.bind(this)} />
             </div>
         );
     }
@@ -50,6 +42,25 @@ class GroceryList extends React.Component {
     }
 }
 
+class GroceryListFoods extends React.Component {
+    render() {
+        return (
+            <ul>
+                {this.props.foods.map((food, i) => {
+                    return (
+                        <li key={i} style={{textDecoration: food.isChecked ? "line-through" : "none"}}>
+                            <input type="checkbox" onChange={(event) => this.props.handleCheckChange(event, i)} />{ food.name }
+                        </li>
+                    );
+                })}
+            </ul>
+        );
+    }
+}
+
 ReactDOM.render(
-    <GroceryList/>, document.getElementById('grocery-list')
+    <div>
+        <GroceryList placeholder=""/>
+        <GroceryList placeholder="example food"/>
+    </div>, document.getElementById('grocery-list')
 );
