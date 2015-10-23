@@ -13,6 +13,9 @@ class GroceryList extends Component {
 
         return (
             <div>
+                <button onClick={this.handleClearAllButtonClick.bind(this)} disabled={!foods.length}>Clear All</button>
+                <button onClick={this.handleClearCheckedButtonClick.bind(this)} disabled={!foods.filter((food) => food.isChecked).length}>Clear Checked</button>
+                <br/>
                 <input type="text" value={inputText} placeholder={this.props.placeholder} onChange={(event) => this.handleTextChange(event)} />
                 <button onClick={this.handleAddButtonClick.bind(this)} disabled={!inputText}>Add</button>
                 <span>{` ${foods.filter((food) => food.isChecked).length} of ${foods.length}`}</span>
@@ -41,6 +44,19 @@ class GroceryList extends Component {
         const currentFood = Object.assign({}, foods[index], { isChecked: !foods[index].isChecked});
         this.setState({
             foods: foods.slice(0, index).concat(currentFood).concat(foods.slice(index + 1))
+        });
+    }
+
+    handleClearAllButtonClick() {
+        this.setState({
+            foods: []
+        });
+    }
+
+    handleClearCheckedButtonClick() {
+        const { foods } = this.state;
+        this.setState({
+            foods: foods.filter((food) => !food.isChecked)
         })
     }
 }
