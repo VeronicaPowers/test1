@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-class GroceryList extends React.Component {
+class GroceryList extends Component {
     constructor() {
         super();
         this.state = { foods: [], inputText: '' };
@@ -9,11 +9,14 @@ class GroceryList extends React.Component {
 
     // Describes the way the UI will look given a certain state.
     render() {
+        const { inputText, foods } = this.state;
+
         return (
             <div>
-                <input type="text" value={this.state.inputText} placeholder={this.props.placeholder} onChange={(event) => this.handleTextChange(event)} />
-                <button onClick={this.handleAddButtonClick.bind(this)} disabled={this.state.inputText === ''}>Add</button>
-                <GroceryListFoods foods={this.state.foods} handleCheckChange={this.handleCheckChange.bind(this)} />
+                <input type="text" value={inputText} placeholder={this.props.placeholder} onChange={(event) => this.handleTextChange(event)} />
+                <button onClick={this.handleAddButtonClick.bind(this)} disabled={!inputText}>Add</button>
+                <span>{` ${foods.filter((food) => food.isChecked).length} of ${foods.length}`}</span>
+                <GroceryListFoods foods={foods} handleCheckChange={this.handleCheckChange.bind(this)} />
             </div>
         );
     }
@@ -26,36 +29,34 @@ class GroceryList extends React.Component {
     }
 
     handleAddButtonClick() {
-        if (this.state.inputText !== '') {
-            this.setState({
-                foods: this.state.foods.concat({isChecked: false, name: this.state.inputText}),
-                inputText: ''
-            });
-        }
+        if (!this.state.inputText) return;
+        this.setState({
+            foods: this.state.foods.concat({isChecked: false, name: this.state.inputText}),
+            inputText: ''
+        });
     }
 
     handleCheckChange(event, index) {
-        const currentFood = Object.assign({}, this.state.foods[index], { isChecked: !this.state.foods[index].isChecked});
+        const { foods } = this.state;
+        const currentFood = Object.assign({}, foods[index], { isChecked: !foods[index].isChecked});
         this.setState({
-            foods: this.state.foods.slice(0, index).concat(currentFood).concat(this.state.foods.slice(index + 1))
+            foods: foods.slice(0, index).concat(currentFood).concat(foods.slice(index + 1))
         })
     }
 }
 
-class GroceryListFoods extends React.Component {
-    render() {
-        return (
-            <ul>
-                {this.props.foods.map((food, i) => {
-                    return (
-                        <li key={i} style={{textDecoration: food.isChecked ? "line-through" : "none"}}>
-                            <input type="checkbox" onChange={(event) => this.props.handleCheckChange(event, i)} />{ food.name }
-                        </li>
-                    );
-                })}
-            </ul>
-        );
-    }
+function GroceryListFoods ({ foods, handleCheckChange }) {
+    return (
+        <ul>
+            {foods.map((food, i) => {
+                return (
+                    <li key={i} style={{textDecoration: food.isChecked ? "line-through" : "none"}}>
+                        <input type="checkbox" onChange={(event) => handleCheckChange(event, i)} />{ food.name }
+                    </li>
+                );
+            })}
+        </ul>
+    );
 }
 
 ReactDOM.render(
