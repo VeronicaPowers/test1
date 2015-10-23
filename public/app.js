@@ -46,6 +46,7 @@ class GroceryList extends Component {
 }
 
 function GroceryListFoods ({ foods, handleCheckChange }) {
+    if (!foods.length) return <p>You have no food. You will starve.</p>;
     return (
         <ul>
             {foods.map((food, i) => {
@@ -61,7 +62,6 @@ function GroceryListFoods ({ foods, handleCheckChange }) {
 
 ReactDOM.render(
     <div>
-        <GroceryList placeholder=""/>
         <GroceryList placeholder="example food"/>
     </div>, document.getElementById('grocery-list')
 );
