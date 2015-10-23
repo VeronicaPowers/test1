@@ -9,6 +9,7 @@ class GroceryList extends Component {
 
     // Describes the way the UI will look given a certain state.
     render() {
+        console.log(this.state);
         const { inputText, foods } = this.state;
 
         return (
@@ -68,7 +69,7 @@ function GroceryListFoods ({ foods, handleCheckChange }) {
             {foods.map((food, i) => {
                 return (
                     <li key={i} style={{textDecoration: food.isChecked ? "line-through" : "none"}}>
-                        <input type="checkbox" onChange={(event) => handleCheckChange(event, i)} />{ food.name }
+                        <input type="checkbox" checked={food.isChecked} onChange={(event) => handleCheckChange(event, i)} />{ food.name }
                     </li>
                 );
             })}
