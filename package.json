@@ -9,15 +9,17 @@
     "request": "^2.64.0"
   },
   "jspm": {
-    "baseURL": "public",
+    "directories": {
+      "baseURL": "public"
+    },
     "dependencies": {
-      "react": "npm:react@^0.14.0",
-      "react-dom": "npm:react-dom@^0.14.0"
+      "react": "npm:react@^0.14.3",
+      "react-dom": "npm:react-dom@^0.14.3"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.8.24",
+      "babel": "npm:babel-core@^5.8.25",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "core-js": "npm:core-js@^1.1.4"
+      "core-js": "npm:core-js@^1.2.6"
     }
   }
 }
